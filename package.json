@@ -1,0 +1,27 @@
+{
+  "name": "nextJS",
+  "version": "1.0.0",
+  "description": "NextJs for ReactJs course at @platzi.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HectorFranc/nextJs-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HectorFranc/nextJs-course/issues"
+  },
+  "homepage": "https://github.com/HectorFranc/nextJs-course#readme",
+  "dependencies": {
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
