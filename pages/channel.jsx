@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Layout from "./components/Layout"
 
 export default class extends React.Component {
     static async getInitialProps({ query }) {
@@ -26,8 +27,7 @@ export default class extends React.Component {
 
     render() {
         const { channel, audioClips, series } = this.props
-        return <>
-            <header>Podcast</header>
+        return <Layout title={ channel.title } >
             <h1>{channel.title}</h1>
 
             <h2>Series</h2>
@@ -43,12 +43,6 @@ export default class extends React.Component {
             ) ) }
 
             <style jsx>{`
-        header {
-          color: #fff;
-          background: #8756ca;
-          padding: 15px;
-          text-align: center;
-        }
 
         .banner {
           width: 100%;
@@ -111,13 +105,7 @@ export default class extends React.Component {
         }
       `}</style>
 
-      <style jsx global>{`
-        body {
-          margin: 0;
-          font-family: system-ui;
-          background: white;
-        }
-        `}</style>
-        </>
+          </Layout>
+        
     }
 }
