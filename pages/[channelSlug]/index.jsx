@@ -1,6 +1,7 @@
 import Link from "next/link"
-import Layout from "./components/Layout"
-import Error from './_error'
+import Layout from "../components/Layout"
+import Error from '../_error'
+import slug from "../../helpers/slug"
 
 export default class extends React.Component {
     static async getInitialProps({ query, res }) {
@@ -56,7 +57,7 @@ export default class extends React.Component {
 
             <h2>Últimos podcasts</h2>
             {audioClips.map( ( clip ) => (
-                <Link href={`\podcast?id=${clip.id}`}>
+                <Link href='[channelSlug]/[podcastSlug]' as={`/${slug(clip.channel.title)}/${slug(clip.title)}?id=${clip.id}`}>
                     <a className="clip">{clip.title}</a>
                 </Link>
             ) ) }
