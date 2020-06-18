@@ -4,6 +4,7 @@ import Error from '../_error'
 import slug from "../../helpers/slug"
 import PodcastListWithClick from "../components/PodcastListWithClick"
 import ChannelGrid from '../components/ChannelGrid'
+import PodcastPlayer from '../components/PodcastPlayer'
 
 export default class extends React.Component {
   constructor(props) {
@@ -57,6 +58,13 @@ export default class extends React.Component {
       })
     }
 
+    closePodcast = (event) => {
+        event.preventDefault()
+        this.setState({
+            openPodcast: null
+        })
+    }
+
     render() {
         const { channel, audioClips, series, statusCode } = this.props
         const { openPodcast } = this.state
@@ -67,6 +75,10 @@ export default class extends React.Component {
 
         return <Layout title={ channel.title } >
             <h1>{channel.title}</h1>
+
+            { openPodcast && <div className="modal">
+                <PodcastPlayer clip={openPodcast} onClose={this.closePodcast} />
+            </div>}
 
 
             <img src={channel.urls.banner_image.original} alt="Banner" className="banner"/>
@@ -79,15 +91,25 @@ export default class extends React.Component {
 
             <style jsx>{`
 
-        .banner {
-          width: 100%;
-          // padding-bottom: 25%;
-          // background-position: 50% 50%;
-          // background-size: cover;
-          // background-color: #aaa;
-        }
+                .banner {
+                width: 100%;
+                // padding-bottom: 25%;
+                // background-position: 50% 50%;
+                // background-size: cover;
+                // background-color: #aaa;
+                }
 
-      `}</style>
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 9999;
+                    background: black;
+                }
+
+            `}</style>
 
           </Layout>
         
