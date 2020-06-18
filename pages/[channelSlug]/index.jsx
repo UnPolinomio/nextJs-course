@@ -2,8 +2,18 @@ import Link from "next/link"
 import Layout from "../components/Layout"
 import Error from '../_error'
 import slug from "../../helpers/slug"
+import PodcastListWithClick from "../components/PodcastListWithClick"
+import ChannelGrid from '../components/ChannelGrid'
 
 export default class extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      openPodcast: null,
+    }
+  }
+
     static async getInitialProps({ query, res }) {
         try {
             let idChannel = query.id
@@ -40,8 +50,16 @@ export default class extends React.Component {
         }
     }
 
+    openPodcast = ( event, podcast ) => {
+      event.preventDefault()
+      this.setState({
+        openPodcast: podcast
+      })
+    }
+
     render() {
         const { channel, audioClips, series, statusCode } = this.props
+        const { openPodcast } = this.state
 
         if (statusCode != 200) {
             return <Error statusCode={ statusCode } />
@@ -50,79 +68,25 @@ export default class extends React.Component {
         return <Layout title={ channel.title } >
             <h1>{channel.title}</h1>
 
-            <h2>Series</h2>
-            {series.map( ( serie ) => (
-                <div>{serie.title}</div>
-            ) ) }
+
+            <img src={channel.urls.banner_image.original} alt="Banner" className="banner"/>
 
             <h2>Últimos podcasts</h2>
-            {audioClips.map( ( clip ) => (
-                <Link href='[channelSlug]/[podcastSlug]' as={`/${slug(clip.channel.title)}/${slug(clip.title)}?id=${clip.id}`}>
-                    <a className="clip">{clip.title}</a>
-                </Link>
-            ) ) }
+            <PodcastListWithClick podcasts={ audioClips } onClickPodcast={ this.openPodcast} />
+  
+            <h2>Series</h2>
+            <ChannelGrid channels={series} />
 
             <style jsx>{`
 
         .banner {
           width: 100%;
-          padding-bottom: 25%;
-          background-position: 50% 50%;
-          background-size: cover;
-          background-color: #aaa;
+          // padding-bottom: 25%;
+          // background-position: 50% 50%;
+          // background-size: cover;
+          // background-color: #aaa;
         }
 
-        .channels {
-          display: grid;
-          grid-gap: 15px;
-          padding: 15px;
-          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        }
-        a.channel {
-          display: block;
-          margin-bottom: 0.5em;
-          color: #333;
-          text-decoration: none;
-        }
-        .channel img {
-          border-radius: 3px;
-          box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
-          width: 100%;
-        }
-        h1 {
-          font-weight: 600;
-          padding: 15px;
-        }
-        h2 {
-          padding: 5px;
-          font-size: 0.9em;
-          font-weight: 600;
-          margin: 0;
-          text-align: center;
-        }
-
-        .podcast {
-          display: block;
-          text-decoration: none;
-          color: #333;
-          padding: 15px;
-          border-bottom: 1px solid rgba(0,0,0,0.2);
-          cursor: pointer;
-        }
-        .podcast:hover {
-          color: #000;
-        }
-        .podcast h3 {
-          margin: 0;
-        }
-        .podcast .meta {
-          color: #666;
-          margin-top: 0.5em;
-          font-size: 0.8em;
-        }
-        .clip {
-            display: block;
-        }
       `}</style>
 
           </Layout>
