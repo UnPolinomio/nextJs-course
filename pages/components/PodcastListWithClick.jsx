@@ -9,7 +9,7 @@ export default class extends React.Component {
 
     return <div>
       { podcasts.map((podcast) => (
-          <Link  href='[channelSlug]/[podcastSlug]' as={`/${slug(podcast.channel.title)}/${slug(podcast.title)}?id=${podcast.id}`}>
+          <Link  href='[channelSlug]/[podcastSlug]' as={`/${slug(podcast.channel.title)}/${slug(podcast.title)}?id=${podcast.id}`} key={podcast.id}>
             <a className='podcast' key={podcast.id}
             onClick={ (event) => onClickPodcast(event, podcast) }>
                 <h3>{ podcast.title }</h3>
