@@ -5,6 +5,10 @@ export default class PodcastPlayer extends React.Component {
   render() {
     const { clip, onClose } = this.props
 
+    if (!clip) {
+      return <></>
+    }
+
     return <div className="modal">
       <div className='clip'>
         <nav>

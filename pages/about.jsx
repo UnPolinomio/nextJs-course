@@ -2,8 +2,7 @@ export default class extends React.Component {
     render() {
         return <>
             <h2>Created by Hector</h2>
-            <p>Hello. I'm Hector</p>
-            <img src="/static/platzi-logo.png" alt="Logo"/>
+            <p><a href="https://github.com/hectorfranc">@HectorFranc</a> at Github</p>
 
             <style jsx>{`
                 h2 {
@@ -18,16 +17,6 @@ export default class extends React.Component {
                     text-align: center;
                     text-align: center
                 }
-
-                img {
-                    max-width: 25%;
-                    text-align: center
-                }
-
-                @media screen and (max-width: 300px) {
-                    img {
-                        max-width: 75%;
-                    }
                 }
             `}</style>
 

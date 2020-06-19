@@ -3,7 +3,7 @@ import slug from '../../helpers/slug'
 
 export default class ChannelGrid extends React.Component {
     render() {
-        const { channels } = this.props
+        const channels= this.props.channels || []
 
         return <>
             <div className="channels">

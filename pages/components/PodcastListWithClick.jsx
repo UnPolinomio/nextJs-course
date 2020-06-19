@@ -3,7 +3,9 @@ import slug from '../../helpers/slug'
 
 export default class extends React.Component {
   render() {
-    const { podcasts, onClickPodcast } = this.props
+    const podcasts = this.props.podcasts || []
+    const { onClickPodcast } = this.props
+
 
     return <div>
       { podcasts.map((podcast) => (

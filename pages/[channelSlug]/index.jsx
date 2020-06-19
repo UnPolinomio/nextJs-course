@@ -6,56 +6,53 @@ import PodcastListWithClick from "../components/PodcastListWithClick"
 import ChannelGrid from '../components/ChannelGrid'
 import PodcastPlayer from '../components/PodcastPlayer'
 
-export default class extends React.Component {
-  constructor(props) {
-    super(props)
+export async function getServerSideProps({ query, res }) {
+    try {
+        let idChannel = query.id
 
-    this.state = {
-      openPodcast: null,
+        let [ reqChannel, reqAudios, reqSeries ] = await Promise.all([
+            fetch(`https://api.audioboom.com/channels/${idChannel}`),
+            fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`),
+            fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`)
+        ])
+        
+        if (reqChannel.status >= 404) {
+            res.statusCode = reqChannel.status
+            return { props: {channel: null, audioClips: null, series: null, statusCode: 404} }
+        }
+
+        let dataChannel = await reqChannel.json()
+        let channel = dataChannel.body.channel
+
+        let dataAudios = await reqAudios.json()
+        let audioClips = dataAudios.body.audio_clips
+
+        let dataSeries = await reqSeries.json()
+        let series = dataSeries.body.channels
+
+
+        return { props: { channel, audioClips, series, statusCode: 200 } }
+    } catch (e) {
+        res.statusCode = 503
+        return { props: { channel: null, audioClips: null, series: null, statusCode: 503 } }
     }
-  }
+}
 
-    static async getInitialProps({ query, res }) {
-        try {
-            let idChannel = query.id
+export default class extends React.Component {
+    constructor(props) {
+        super(props)
 
-            let [ reqChannel, reqAudios, reqSeries ] = await Promise.all([
-                fetch(`https://api.audioboom.com/channels/${idChannel}`),
-                fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`),
-                fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`)
-            ])
-            
-            if (reqChannel.status >= 404) {
-                res.statusCode = reqChannel.status
-                return {
-                    channel: null, audioClips: null, series: null, statusCode: 404
-                }
-            }
-
-            let dataChannel = await reqChannel.json()
-            let channel = dataChannel.body.channel
-
-            let dataAudios = await reqAudios.json()
-            let audioClips = dataAudios.body.audio_clips
-
-            let dataSeries = await reqSeries.json()
-            let series = dataSeries.body.channels
-
-
-            return { channel, audioClips, series, statusCode: 200 }
-        } catch (e) {
-            res.statusCode = 503
-            return {
-                channel: null, audioClips: null, series: null, statusCode: 503
-            }
+        this.state = {
+            openPodcast: null,
         }
     }
 
+
     openPodcast = ( event, podcast ) => {
-      event.preventDefault()
-      this.setState({
-        openPodcast: podcast
-      })
+        event.preventDefault()
+        this.setState({
+            openPodcast: podcast
+        })
     }
 
     closePodcast = (event) => {
@@ -84,7 +81,7 @@ export default class extends React.Component {
             <img src={channel.urls.banner_image.original} alt="Banner" className="banner"/>
 
             <h2>Últimos podcasts</h2>
-            <PodcastListWithClick podcasts={ audioClips } onClickPodcast={ this.openPodcast} />
+            <PodcastListWithClick podcasts={ audioClips } onClickPodcast={ this.openPodcast } />
   
             <h2>Series</h2>
             <ChannelGrid channels={series} />
