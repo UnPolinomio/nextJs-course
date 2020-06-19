@@ -37,7 +37,8 @@ export default class Layout extends React.Component {
                 background: #8756ca;
                 padding: 15px;
                 text-align: center;
-                font-size: 20px
+                font-size: 20px;
+                margin-bottom: 25px
             }
             header h2 {
                 font-size: 1em;

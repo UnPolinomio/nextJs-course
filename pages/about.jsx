@@ -1,31 +1,27 @@
+import Layout from './components/Layout'
+
 export default class extends React.Component {
     render() {
-        return <>
-            <h2>Created by Hector</h2>
-            <p><a href="https://github.com/hectorfranc">@HectorFranc</a> at Github</p>
+        return <Layout>
+            <h4>Created by Hector</h4>
+            <p><a target='_blank' href="https://github.com/hectorfranc">@HectorFranc</a> at Github</p>
 
             <style jsx>{`
-                h2 {
-                    font-size: 20px;
-                    color: white;
+                h4 {
+                    font-size: 35px;
                     text-align: center;
-                    text-align: center
+                    text-align: center;
                 }
                 p {
                     font-size: 25px;
-                    color: #DDD;
                     text-align: center;
                     text-align: center
                 }
                 }
-            `}</style>
-
-            <style jsx global>{`
-                body {
-                    min-height: 100vh;
-                    background-color: #003;
+                p a{
+                    text-decoration: none;
                 }
             `}</style>
-        </>
+        </Layout>
     }
 }
