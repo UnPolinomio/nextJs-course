@@ -22,7 +22,7 @@ export default class ChannelGrid extends React.Component {
                     display: grid;
                     grid-gap: 15px;
                     padding: 15px;
-                    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
                 }
                 a.channel {
                     display: block;
@@ -41,6 +41,13 @@ export default class ChannelGrid extends React.Component {
                     font-weight: 600;
                     margin: 0;
                     text-align: center;
+                }
+
+                @media screen and (min-width: 767px) {
+                    .channels {
+                        grid-gap: 25px;
+                        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                    }
                 }
             `}</style>
         </>

@@ -19,10 +19,17 @@ export default class Layout extends React.Component {
         </Head>
 
         <header>
-            <Link href="/"><a>Podcast</a></Link>
-        </header>
+            <div className="container">
+                <h2><Link href="/"><a>Podcast</a></Link></h2>
 
-        {children}
+                <nav>
+                    <Link href="/about"><a>About</a></Link>
+                </nav>
+            </div>
+        </header>
+        <div className="container">
+            {children}
+        </div>
 
         <style jsx>{`
             header {
@@ -30,10 +37,35 @@ export default class Layout extends React.Component {
                 background: #8756ca;
                 padding: 15px;
                 text-align: center;
+                font-size: 20px
+            }
+            header h2 {
+                font-size: 1em;
+            }
+            
+            header .container,
+            header nav {
+                display: flex;
+                justify-content: space-between;
+
+            }
+            header nav a {
             }
             header a {
                 color: #fff;
                 text-decoration: none;
+                line-height: 1.5em
+            }
+
+            div.container {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            @media screen and (min-width: 767px) {
+                div.container {
+                    width: 80%;
+                }
             }
         `}</style>
 
@@ -42,6 +74,10 @@ export default class Layout extends React.Component {
                 margin: 0;
                 font-family: system-ui;
                 background: white;
+            }
+            * {
+                margin: 0;
+                box-sixing: border-box;
             }
 
             /* Make clicks pass-through */

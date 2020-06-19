@@ -80,20 +80,19 @@ export default class extends React.Component {
 
             <img src={channel.urls.banner_image.original} alt="Banner" className="banner"/>
 
-            <h2>Últimos podcasts</h2>
-            <PodcastListWithClick podcasts={ audioClips } onClickPodcast={ this.openPodcast } />
+            { (audioClips.length > 0) && <h2>Last podcasts</h2>}
+            <div className="clips">
+                <PodcastListWithClick podcasts={ audioClips } onClickPodcast={ this.openPodcast } />
+            </div>
   
-            <h2>Series</h2>
+            { (series.length > 0) && <h2>More channels</h2>}
             <ChannelGrid channels={series} />
 
             <style jsx>{`
 
                 .banner {
-                width: 100%;
-                // padding-bottom: 25%;
-                // background-position: 50% 50%;
-                // background-size: cover;
-                // background-color: #aaa;
+                    width: 100%;
+                    margin-bottom: 10px
                 }
 
                 .modal {
@@ -104,6 +103,21 @@ export default class extends React.Component {
                     bottom: 0;
                     z-index: 9999;
                     background: black;
+                }
+
+                h1 {
+                    font-size: 35px;
+                    font-weigh: bold;
+                    margin-bottom: 10px
+                }
+
+                h2 {
+                    font-size: 25px;
+                    margin-bottom: 10px
+                }
+
+                div.clips {
+                    margin-bottom: 20px
                 }
 
             `}</style>
